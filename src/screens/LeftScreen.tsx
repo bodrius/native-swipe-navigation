@@ -1,19 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {Routes} from '../navigation';
 import {RouteService} from '../shared';
-import {SwipeGesture} from '../feature';
 
-export const LeftScreen = () => {
-  const onSwipeLeft = () => RouteService.navigate(Routes.HOME_SCREEN);
+export const LeftScreen = ({navigation}: any) => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener(
+      'transitionStart',
+      (event: any) => {
+        event.data?.closing && RouteService.navigate(Routes.HOME_SCREEN);
+      },
+    );
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
-    <SwipeGesture onSwipeLeft={onSwipeLeft}>
-      <View style={styles.layout}>
-        <Text style={styles.name}>LEFT SCREEN</Text>
-      </View>
-    </SwipeGesture>
+    <View style={styles.layout}>
+      <Text style={styles.name}>LEFT SCREEN</Text>
+    </View>
   );
 };
 

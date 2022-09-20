@@ -1,19 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {Routes} from '../navigation';
 import {RouteService} from '../shared';
-import {SwipeGesture} from '../feature';
 
-export const RightScreen = () => {
-  const onSwipeRight = () => RouteService.navigate(Routes.HOME_SCREEN);
+export const RightScreen = ({navigation}: any) => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener(
+      'transitionStart',
+      (event: any) => {
+        event.data?.closing && RouteService.navigate(Routes.HOME_SCREEN);
+      },
+    );
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
-    <SwipeGesture onSwipeRight={onSwipeRight}>
-      <View style={styles.layout}>
-        <Text style={styles.name}>RIGHT SCREEN</Text>
-      </View>
-    </SwipeGesture>
+    <View style={styles.layout}>
+      <Text style={styles.name}>RIGHT SCREEN</Text>
+    </View>
   );
 };
 

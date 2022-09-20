@@ -13,6 +13,7 @@ import {
   SecondBottomScreen,
 } from '../screens';
 import {Routes} from './routes';
+import {windowWidth, windowHeight} from '../helpers';
 
 const Stack = createStackNavigator();
 
@@ -21,15 +22,17 @@ export const SwipeNavigator = () => {
     <Stack.Navigator
       initialRouteName={Routes.HOME_SCREEN}
       screenOptions={{
-        headerStyle: {backgroundColor: 'tomato'},
-        gestureEnabled: false,
         headerShown: false,
+        gestureResponseDistance: 1000,
+        detachPreviousScreen: false,
+        freezeOnBlur: true,
       }}>
       <Stack.Screen
         name={Routes.HOME_SCREEN}
         component={HomeScreen}
         options={{
-          presentation: 'transparentModal',
+          gestureResponseDistance: 500,
+          gestureDirection: 'vertical-inverted',
         }}
       />
 
@@ -38,10 +41,12 @@ export const SwipeNavigator = () => {
         component={TopScreen}
         options={{
           cardStyleInterpolator: props =>
-            CardStyleInterpolators.forVerticalIOS({
+            CardStyleInterpolators.forRevealFromBottomAndroid({
               ...props,
               inverted: -1,
             }),
+          gestureResponseDistance: windowHeight / 2,
+          gestureDirection: 'vertical-inverted',
         }}
       />
 
@@ -51,6 +56,8 @@ export const SwipeNavigator = () => {
         options={{
           cardStyleInterpolator: props =>
             CardStyleInterpolators.forHorizontalIOS({...props, inverted: -1}),
+          gestureDirection: 'horizontal-inverted',
+          gestureResponseDistance: windowWidth / 2,
         }}
       />
 
@@ -59,6 +66,8 @@ export const SwipeNavigator = () => {
         component={RightScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          gestureDirection: 'horizontal',
+          gestureResponseDistance: windowWidth / 2,
         }}
       />
 
@@ -67,6 +76,9 @@ export const SwipeNavigator = () => {
         component={BottomScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+          gestureResponseDistance: windowHeight / 2,
+          gestureDirection: 'vertical',
+          presentation: 'transparentModal',
         }}
       />
 

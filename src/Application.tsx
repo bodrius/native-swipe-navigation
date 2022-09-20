@@ -2,8 +2,8 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {RouteService} from './services';
 import {SwipeNavigator} from './navigation';
+import {RouteService} from './shared/services';
 
 const App = () => {
   return (

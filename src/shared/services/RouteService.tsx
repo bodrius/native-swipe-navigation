@@ -1,7 +1,6 @@
 import {
   StackActions,
   CommonActions,
-  DrawerActions,
   createNavigationContainerRef,
 } from '@react-navigation/native';
 
@@ -10,18 +9,6 @@ const navigationRef = createNavigationContainerRef();
 const navigate = (name: string, params?: object) => {
   if (navigationRef.isReady()) {
     navigationRef.current?.dispatch(CommonActions.navigate({name, params}));
-  }
-};
-
-const openDrawer = () => {
-  if (navigationRef?.current) {
-    navigationRef.current?.dispatch(DrawerActions.openDrawer());
-  }
-};
-
-const closeDrawer = () => {
-  if (navigationRef?.current) {
-    navigationRef.current?.dispatch(DrawerActions.closeDrawer());
   }
 };
 
@@ -63,8 +50,6 @@ const reset = (name: string, params?: object) => {
 export const RouteService = {
   navigationRef,
   navigate,
-  openDrawer,
-  closeDrawer,
   goBack,
   pop,
   popToTop,
